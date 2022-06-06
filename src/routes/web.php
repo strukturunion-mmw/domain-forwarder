@@ -1,18 +1,13 @@
 <?php
 
+use App\Http\Controllers\ForwardController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// Catch all Routes and pass to Forwarding Controller
+Route::get('{any?}', function (Request $request) {
+    $forward = new ForwardController;
+    $forward->redirect($request);
+})->where('any', '.*');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+

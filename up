@@ -4,6 +4,6 @@
 ./@secret_credentials/zip-credentials.sh 
 
 # Copy .env files
-cp ./@secret_credentials/env ./src/.env
+cp ./@secret_credentials/env.local ./src/.env
 
 cd /workspaces/domain-forwarder/src && bash ./vendor/bin/sail up -d
