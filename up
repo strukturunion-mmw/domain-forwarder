@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Compress Credentials Folder
+./@secret_credentials/zip-credentials.sh 
+
+# Copy .env files
+cp ./@secret_credentials/env ./src/.env
+
+cd /workspaces/domain-forwarder/src && bash ./vendor/bin/sail up -d
