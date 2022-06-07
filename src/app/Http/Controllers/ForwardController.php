@@ -23,8 +23,9 @@ class ForwardController extends Controller
 
         // Resolve from DB
         $target = $this->resolve($urlServer, $urlPath);
-
-        dd ($urlServer.$urlPath." -> ".$target);
+        
+        // Uncomment for Testing | Outputs Source -> Target
+        //dd ($urlServer.$urlPath." -> ".$target);
 
         die( header("Location:{$target}", true, 301) );
 
