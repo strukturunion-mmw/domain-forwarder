@@ -19,10 +19,12 @@ class ForwardController extends Controller
 
         // Extract URL parts from Request
         $urlServer = $request->server ('HTTP_HOST');
-        $urlPath = trim($request->requestUri) != "/" ? $request->requestUri : "";
+        $urlPath = trim($request->getRequestUri()) != "/" ? $request->getRequestUri() : "";
 
         // Resolve from DB
-        $target = $this->resolve($urlServer . $urlPath);
+        $target = $this->resolve($urlServer, $urlPath);
+
+        dd ($urlServer.$urlPath." -> ".$target);
 
         die( header("Location:{$target}", true, 301) );
 
@@ -31,16 +33,32 @@ class ForwardController extends Controller
     /**
      * Resolves first matching or Default Route for Request URL from database
      *
-     * @param  string  $url
+     * @param  string  $urlServer   // Domain Part of URL
+     * @param  string  $urlPath     // Path Part of URL
      * @return string
      */
-    private Function resolve ($url) {
+    private Function resolve ($urlServer, $urlPath) {
+
+        $redirectTo = "";
 
         // Find match in Database
-        $match = Forward::where('request', $url)->orWhere('request', 'default')->select('target')->orderBy('id')->get()->toArray();
+        $match = Forward::
+            where('request', $urlServer.$urlPath)   // Find FUll URL
+            ->orWhere('request', $urlServer)        // Find ONLY Server URL
+            ->orWhere('request', 'default')         // Find default Route
+            ->select('request', 'target')
+            ->orderBy('id')
+            ->get()
+            ->collect();
+        
+        // Use first match in order: Full URL match > Only server Match > Default
+        $match = $match->keyBy('request');
+        if(isset($match[$urlServer.$urlPath])) $redirectTo = $match[$urlServer.$urlPath]['target'];
+        elseif(isset($match[$urlServer])) $redirectTo = $match[$urlServer]['target'];
+        else $redirectTo = $match['default']['target'];
 
         // Return redirection if found. Else return Default Route (First entry in Match Resultset)
-        return isset($match[1]) ? $match[1]['target'] : $match[0]['target'];
+        return $redirectTo;
 
     }
 
