@@ -12,9 +12,9 @@ information stored on a seprate SQL Server.
 
 ## Installation
 - Add `alias sail='[ -f sail ] && bash sail || cd /PATH/TO/PROJECT/ROOT/src && bash ./vendor/bin/sail'"` to `nano ~/.bashrc`
-- run `credentials_restore.sh` to setup default .env files
+- run `set-me-up` to setup default .env files and prepare Laravel Sail
+- bring up Service to build Laravel Sail containers with `sail up -d`
 - run `sail composer install`
-- bring up Service to build local Database with `sail up -d`
 - run `sail artisan migrate:fresh --seed` to seed local database
 
 ## Usage
