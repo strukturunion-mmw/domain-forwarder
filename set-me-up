@@ -7,7 +7,7 @@ unzip ./crdts.zip
 cp ./@secret_credentials/env ./src/.env
 
 # Unzip Laravel Sail Tool
-unzip ./@secret_credentials/laravel-sail.zip -d .src
+unzip ./@secret_credentials/laravel-sail.zip -d ./src
 
 # Remove Setup file
 rm ./set-me-up
