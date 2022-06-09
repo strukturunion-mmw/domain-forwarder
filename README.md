@@ -11,7 +11,8 @@ information stored on a seprate SQL Server.
 👨🏻‍💻 strukturunion gmbh | www.strukturunion.de
 
 ## Installation
-- Add `alias sail='[ -f sail ] && bash sail || cd /PATH/TO/PROJECT/ROOT/src && bash ./vendor/bin/sail'"` to `nano ~/.bashrc`
+- Add sail Bash Alias by runnning `echo "alias sail='[ -f sail ] && bash sail || cd ${PWD}/src && bash ./vendor/bin/sail'" >> ~/.bashrc`
+- Restart Shell
 - run `set-me-up` to setup default .env files and prepare Laravel Sail
 - bring up Service to build Laravel Sail containers with `sail up -d`
 - run `sail composer install`
